@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'dwbi';
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+  ) {
+    router.events.pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        this.title = (event as NavigationEnd).urlAfterRedirects.replace('/', '').toUpperCase();
+      });
+  }
+
 }

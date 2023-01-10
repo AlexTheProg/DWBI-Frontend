@@ -1,0 +1,53 @@
+<div class="form-dialog">
+  <h2 mat-dialog-title>{{mode}} Trip</h2>
+  <mat-dialog-content class="mat-typography">
+    <form [formGroup]="form">
+      <mat-form-field appearance="fill">
+        <mat-label>Duration</mat-label>
+        <input type="text" matInput formControlName="duration">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>KM</mat-label>
+        <input type="number" matInput formControlName="km">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Initial Fee</mat-label>
+        <input type="text" matInput formControlName="initial_fee">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Waiting Fee</mat-label>
+        <input type="text" matInput formControlName="waiting_fee">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Cancel Fee</mat-label>
+        <input type="number" matInput formControlName="cancel_fee">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Status</mat-label>
+        <input type="text" matInput formControlName="status">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Address Start</mat-label>
+        <input type="text" matInput formControlName="address_start">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Address End</mat-label>
+        <input type="text" matInput formControlName="address_end">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Date</mat-label>
+        <input type="text" matInput formControlName="date">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Time</mat-label>
+        <input type="text" matInput formControlName="time">
+      </mat-form-field>
+    </form>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close="true">Cancel</button>
+    <button mat-raised-button color="primary" mat-dialog-close="true" [disabled]="form.invalid || form.pristine">Add
+    </button>
+  </mat-dialog-actions>
+</div>

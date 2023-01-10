@@ -1,0 +1,40 @@
+<div class="form-dialog">
+  <h2 mat-dialog-title>{{mode}} Driver</h2>
+  <mat-dialog-content class="mat-typography">
+    <form [formGroup]="form">
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input type="text" matInput formControlName="first_name">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input type="text" matInput formControlName="last_name">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Phone Number</mat-label>
+        <input type="text" matInput formControlName="phone_number">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Car Number</mat-label>
+        <input type="text" matInput formControlName="car_number">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Ride type</mat-label>
+        <mat-select formControlName="ride_type">
+          <mat-option value="standard">Standard</mat-option>
+          <mat-option value="premium">Premium</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Rating</mat-label>
+        <input type="number" matInput formControlName="rating">
+      </mat-form-field>
+    </form>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close="true">Cancel</button>
+    <button mat-raised-button color="primary" mat-dialog-close="true" [disabled]="form.invalid || form.pristine">Add
+    </button>
+  </mat-dialog-actions>
+</div>

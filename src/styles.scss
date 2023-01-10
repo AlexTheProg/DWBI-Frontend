@@ -1,1 +1,63 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.form-dialog {
+  mat-form-field {
+    width: 100%
+  }
+
+  mat-dialog-actions {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    padding-top: 0;
+  }
+
+  mat-dialog-content {
+    padding-bottom: 10px;
+  }
+
+  h2 {
+    margin-bottom: 5px;
+    text-transform: capitalize;
+  }
+}
+
+.mat-mdc-table {
+  margin: 10px;
+
+  .mat-mdc-header-cell {
+    color: white;
+    text-transform: capitalize;
+  }
+
+  .mat-mdc-header-row {
+    background-color: #8C9EFF;
+  }
+
+  .actions {
+    width: 50px;
+    color: #0077b6;
+  }
+
+  .actions-buttons {
+    color: #023e8a;
+  }
+
+  .add-button {
+    background: white;
+    color: #023e8a;
+    height: 30px;
+    width: 30px;
+    float: right;
+    margin-right: 20px;
+  }
+}
