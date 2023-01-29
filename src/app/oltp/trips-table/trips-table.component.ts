@@ -1,14 +1,22 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, of, take } from 'rxjs';
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  selector: 'app-trips-table',
+  templateUrl: './trips-table.component.html',
+  styleUrls: ['./trips-table.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
-export class TableComponent implements OnInit, AfterViewInit {
+export class TripsTableComponent implements OnInit, AfterViewInit {
   @Input() dataSource: Observable<any[]> | undefined = of([]);
   @Input() dataColumns: string[] = [];
   @Output() addItem = new EventEmitter<void>();
@@ -16,11 +24,14 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Output() deleteItem = new EventEmitter<number>();
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
-  displayedColumns: string[] = [];
   newDataSource = new MatTableDataSource<Element>();
+  expandedElement: any = undefined;
+
+  constructor() {
+  }
 
   ngOnInit() {
-    this.displayedColumns = [...this.dataColumns, 'actions'];
+
   }
 
   ngAfterViewInit(): void {
@@ -43,7 +54,7 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.editItem.next(element);
   }
 
-  onDelete(element:any) {
+  onDelete(element: any) {
     this.deleteItem.next(element.id);
   }
 }

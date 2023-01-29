@@ -3,51 +3,96 @@
   <mat-dialog-content class="mat-typography">
     <form [formGroup]="form">
       <mat-form-field appearance="fill">
-        <mat-label>Duration</mat-label>
-        <input type="text" matInput formControlName="duration">
+        <mat-label>Distance</mat-label>
+        <input type="number" matInput formControlName="distance">
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>KM</mat-label>
-        <input type="number" matInput formControlName="km">
+        <mat-label>Estimated Cost</mat-label>
+        <input type="number" matInput formControlName="estimatedCost">
       </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Initial Fee</mat-label>
-        <input type="text" matInput formControlName="initial_fee">
+      <mat-form-field>
+        <mat-label>Pickup Time</mat-label>
+        <input
+          matInput
+          [ngxMatDatetimePicker]="$any(picker)"
+          placeholder="Choose a date"
+          formControlName="pickupTime"
+          [max]="getMaxDate()"
+        >
+        <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #picker [showSeconds]="true">
+        </ngx-mat-datetime-picker>
       </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Waiting Fee</mat-label>
-        <input type="text" matInput formControlName="waiting_fee">
+      <mat-form-field>
+        <mat-label>Dropoff Time</mat-label>
+        <input
+          matInput
+          [ngxMatDatetimePicker]="$any(picker2)"
+          placeholder="Choose a date"
+          formControlName="dropoffTime"
+          [min]="getMinDate()"
+          [max]="getMaxDate()"
+        >
+        <mat-datepicker-toggle matSuffix [for]="$any(picker2)"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #picker2 [showSeconds]="true">
+        </ngx-mat-datetime-picker>
       </mat-form-field>
+
+      <!--      <mat-form-field appearance="fill">-->
+      <!--        <mat-label>Dropoff Time</mat-label>-->
+      <!--        <input type="text" matInput formControlName="dropoffTime">-->
+      <!--      </mat-form-field>-->
       <mat-form-field appearance="fill">
-        <mat-label>Cancel Fee</mat-label>
-        <input type="number" matInput formControlName="cancel_fee">
+        <mat-label>Currency</mat-label>
+        <mat-select formControlName="currency">
+          <mat-option value="RON">RON</mat-option>
+          <mat-option value="EURO">EURO</mat-option>
+          <mat-option value="USD">USD</mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Status</mat-label>
-        <input type="text" matInput formControlName="status">
+        <mat-select formControlName="status">
+          <mat-option value="COMPLETED">Completed</mat-option>
+          <mat-option value="CANCELLED">Cancelled</mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Address Start</mat-label>
-        <input type="text" matInput formControlName="address_start">
+        <mat-label>Waiting Fee</mat-label>
+        <input type="number" matInput formControlName="waitingFee">
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Address End</mat-label>
-        <input type="text" matInput formControlName="address_end">
+        <mat-label>Cancel Fee</mat-label>
+        <input type="number" matInput formControlName="cancelFee">
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Date</mat-label>
-        <input type="text" matInput formControlName="date">
+        <mat-label>Location Start</mat-label>
+        <input type="number" matInput formControlName="locationStartId">
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Time</mat-label>
-        <input type="text" matInput formControlName="time">
+        <mat-label>Location End</mat-label>
+        <input type="number" matInput formControlName="locationEndId">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Driver</mat-label>
+        <input type="number" matInput formControlName="driverId">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Client</mat-label>
+        <input type="number" matInput formControlName="clientId">
       </mat-form-field>
     </form>
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close="true">Cancel</button>
-    <button mat-raised-button color="primary" mat-dialog-close="true" [disabled]="form.invalid || form.pristine">Add
+    <button mat-button mat-dialog-close="true" (click)="onCancel()">Cancel</button>
+    <button
+      (click)="onAdd()"
+      [disabled]="form.invalid || form.pristine"
+      color="primary"
+      mat-dialog-close="true"
+      mat-raised-button
+    >Add
     </button>
   </mat-dialog-actions>
 </div>

@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogData } from '../../shared/dialog-data.model';
 import { Invoice } from '../../models/invoice.model';
 
@@ -13,25 +13,37 @@ export class AddEditInvoiceComponent {
   form: FormGroup;
   mode: 'add' | 'edit';
   initialItem: Invoice = {
-    invoice_id: '',
-    payment_type: '',
-    tip: 0,
-    final_fee: 0,
-    status: ''
+    paymentType: '',
+    amountToPay: 0,
+    tips: 0,
+    status: '',
+    tripId: 0
   }
 
 
-  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  constructor(
+    public dialogRef: MatDialogRef<AddEditInvoiceComponent>,
+    private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {
     this.mode = this.data.mode;
     if (this.data.item) {
       this.initialItem = this.data.item;
     }
 
     this.form = this.fb.group({
-      payment_type: [this.initialItem.payment_type, Validators.required],
-      tip: [this.initialItem.tip || null, Validators.required],
-      final_fee: [this.initialItem.final_fee || null, Validators.required],
+      paymentType: [this.initialItem.paymentType, Validators.required],
+      tips: [this.initialItem.tips || null, Validators.required],
+      tripId: [this.initialItem.tripId || null, Validators.required],
+      amountToPay: [this.initialItem.amountToPay || null, Validators.required],
       status: [this.initialItem.status, Validators.required]
     });
+  }
+
+  onAdd(): void {
+    this.dialogRef.close(this.initialItem.id ? {id: this.initialItem.id, ...this.form.value} : this.form.value);
+  }
+
+  onCancel() {
+    this.dialogRef.close(false);
   }
 }

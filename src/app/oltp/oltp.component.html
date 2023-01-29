@@ -1,109 +1,61 @@
 <div class="container">
   <h2>Drivers</h2>
   <app-table
-    [dataSource]="appService.getDrivers()"
+    *ngIf="drivers$"
+    [dataSource]="drivers$"
     [dataColumns]="driverColumns"
     (addItem)="onAddDriver()"
     (editItem)="onEditDriver($event)"
+    (deleteItem)="onDelete('Driver', $event)"
   ></app-table>
 </div>
 
 <div class="container">
   <h2>Clients</h2>
   <app-table
-    [dataSource]="appService.getClients()"
+    *ngIf="clients$"
+    [dataSource]="clients$"
     [dataColumns]="clientColumns"
     (addItem)="onAddClient()"
     (editItem)="onEditClient($event)"
+    (deleteItem)="onDelete('Client', $event)"
   ></app-table>
 </div>
 
 <div class="container">
   <h2>Locations</h2>
   <app-table
-    [dataSource]="appService.getLocations()"
+    *ngIf="locations$"
+    [dataSource]="locations$"
     [dataColumns]="locationColumns"
     (addItem)="onAddLocation()"
     (editItem)="onEditLocation($event)"
+    (deleteItem)="onDelete('Location', $event)"
+  ></app-table>
+</div>
+
+<div class="container">
+  <h2>Trips</h2>
+  <app-table
+    *ngIf="trips$"
+    [dataSource]="trips$"
+    [dataColumns]="tripColumns"
+    (addItem)="onAddTrip()"
+    (editItem)="onEditLocation($event)"
+    (deleteItem)="onDelete('Trip', $event)"
   ></app-table>
 </div>
 
 <div class="container">
   <h2>Invoices</h2>
   <app-table
-    [dataSource]="appService.getInvoices()"
+    *ngIf="invoices$"
+    [dataSource]="invoices$"
     [dataColumns]="invoiceColumns"
     (addItem)="onAddInvoice()"
     (editItem)="onEditInvoice($event)"
+    (deleteItem)="onDelete('Invoice', $event)"
   ></app-table>
-</div>
-
-<div class="container">
-  <h2>Trips</h2>
-
-  <table mat-table
-         [dataSource]="appService.getTrips()" multiTemplateDataRows
-         class="mat-elevation-z8 trips-table">
-    <ng-container matColumnDef="{{column}}" *ngFor="let column of tripColumns">
-      <th mat-header-cell *matHeaderCellDef> {{column | tableHeader}} </th>
-      <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef class="actions">
-        <button mat-fab class="add-button" (click)="onAddTrip()">
-          <mat-icon aria-hidden="false" aria-label="add" fontIcon="add"></mat-icon>
-        </button>
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-flat-button class="actions-buttons" (click)="onEditTrip(element); $event.stopPropagation()">
-          <mat-icon aria-hidden="false" aria-label="edit" fontIcon="edit"></mat-icon>
-        </button>
-
-      </td>
-    </ng-container>
-
-    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-    <ng-container matColumnDef="expandedDetail">
-      <td mat-cell *matCellDef="let element" [attr.colspan]="tripColumns.length + 1">
-        <div class="example-element-detail"
-             [@detailExpand]="expandedElement?.trip_id === element?.trip_id ? 'expanded' : 'collapsed'">
-          <div class="detail">
-            <p>Driver</p>
-            <p><strong>Id:</strong></p>
-            <p><strong>First Name:</strong></p>
-            <p><strong>Last Name:</strong></p>
-            <p><strong>Car No:</strong></p>
-            <p><strong>Rating:</strong></p>
-          </div>
-          <div class="detail">
-            <p>Client</p>
-            <p><strong>Id:</strong></p>
-            <p><strong>First Name:</strong></p>
-            <p><strong>Last Name:</strong></p>
-            <p><strong>Phone Number:</strong></p>
-            <p><strong>Email:</strong></p>
-          </div>
-          <div class="detail">
-            <p>Invoice</p>
-            <p><strong>Id:</strong></p>
-            <p><strong>Payment Type:</strong></p>
-            <p><strong>Tip:</strong></p>
-            <p><strong>Final Fee:</strong></p>
-            <p><strong>Status:</strong></p>
-          </div>
-        </div>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="tripColumns.concat(['actions'])"></tr>
-    <tr mat-row *matRowDef="let element; columns: tripColumns.concat(['actions']);"
-        class="example-element-row"
-        [class.example-expanded-row]="expandedElement?.trip_id === element?.trip_id"
-        (click)="expandedElement = expandedElement?.trip_id === element?.trip_id ? null : element">
-    </tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-  </table>
 </div>
 
 

@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogData } from '../../shared/dialog-data.model';
 import { Client } from '../../models/client.model';
 
@@ -13,26 +13,42 @@ export class AddEditClientComponent {
   form: FormGroup;
   mode: 'add' | 'edit';
   initialItem: Client = {
-    first_name: '',
-    last_name: '',
-    phone_number: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
     email: '',
-    client_id: ''
+    username: '',
+    password: '',
+    rating: 0,
   }
 
 
-  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  constructor(
+    public dialogRef: MatDialogRef<AddEditClientComponent>,
+    private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) {
     this.mode = this.data.mode;
     if (this.data.item) {
       this.initialItem = this.data.item;
     }
 
     this.form = this.fb.group({
-      first_name: [this.initialItem.first_name, Validators.required],
-      last_name: [this.initialItem.last_name, Validators.required],
-      phone_number: [this.initialItem.phone_number, Validators.required],
+      firstName: [this.initialItem.firstName, Validators.required],
+      lastName: [this.initialItem.lastName, Validators.required],
+      rating: [this.initialItem.rating || null, Validators.required],
+      phoneNumber: [this.initialItem.phoneNumber, Validators.required],
+      username: [this.initialItem.username, Validators.required],
+      password: [this.initialItem.password, Validators.required],
       email: [this.initialItem.email, [Validators.required, Validators.email]],
     });
+  }
+
+  onAdd(): void {
+    this.dialogRef.close(this.initialItem.id ? {id: this.initialItem.id, ...this.form.value} : this.form.value);
+  }
+
+  onCancel() {
+    this.dialogRef.close(false);
   }
 
 }

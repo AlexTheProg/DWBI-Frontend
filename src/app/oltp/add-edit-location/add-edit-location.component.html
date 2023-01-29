@@ -4,29 +4,35 @@
     <form [formGroup]="form">
       <mat-form-field appearance="fill">
         <mat-label>Location Type</mat-label>
-        <mat-select formControlName="location_type">
-          <mat-option value="urban">Urban</mat-option>
-          <mat-option value="rural">Rural</mat-option>
+        <mat-select formControlName="locationType">
+          <mat-option value="URBAN">Urban</mat-option>
+          <mat-option value="RURAL">Rural</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Region</mat-label>
-        <input type="text" matInput formControlName="region">
+        <mat-label>County</mat-label>
+        <input type="text" matInput formControlName="county">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>City</mat-label>
         <input type="text" matInput formControlName="city">
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Address</mat-label>
-        <input type="text" matInput formControlName="address">
+        <mat-label>Street</mat-label>
+        <input type="text" matInput formControlName="street">
       </mat-form-field>
     </form>
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close="true">Cancel</button>
-    <button mat-raised-button color="primary" mat-dialog-close="true" [disabled]="form.invalid || form.pristine">Add
+    <button mat-button mat-dialog-close="true" (click)="onCancel()">Cancel</button>
+    <button
+      mat-raised-button color="primary"
+      mat-dialog-close="true"
+      [disabled]="form.invalid || form.pristine"
+      (click)="onAdd()"
+    >
+      Add
     </button>
   </mat-dialog-actions>
 </div>

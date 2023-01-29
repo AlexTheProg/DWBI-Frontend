@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogData } from '../../shared/dialog-data.model';
 import { Location } from '../../models/location.model';
 
@@ -13,25 +13,35 @@ export class AddEditLocationComponent {
   form: FormGroup;
   mode: 'add' | 'edit';
   initialItem: Location = {
-    location_id: '',
-    location_type: '',
-    region: '',
+    locationType: '',
+    county: '',
     city: '',
-    address: ''
+    street: ''
   }
 
 
-  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  constructor(
+    public dialogRef: MatDialogRef<AddEditLocationComponent>,
+    private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {
     this.mode = this.data.mode;
     if (this.data.item) {
       this.initialItem = this.data.item;
     }
 
     this.form = this.fb.group({
-      location_type: [this.initialItem.location_type, Validators.required],
-      region: [this.initialItem.region, Validators.required],
+      locationType: [this.initialItem.locationType, Validators.required],
+      county: [this.initialItem.county, Validators.required],
       city: [this.initialItem.city, Validators.required],
-      address: [this.initialItem.address, Validators.required]
+      street: [this.initialItem.street, Validators.required]
     });
+  }
+
+  onAdd(): void {
+    this.dialogRef.close(this.initialItem.id ? {id: this.initialItem.id, ...this.form.value} : this.form.value);
+  }
+
+  onCancel() {
+    this.dialogRef.close(false);
   }
 }

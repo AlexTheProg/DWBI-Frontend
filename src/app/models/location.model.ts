@@ -1,7 +1,7 @@
 export interface Location {
-  location_type: string,
-  region: string,
+  id?: number
+  locationType: string,
+  county: string,
   city: string,
-  location_id: string,
-  address: string
+  street: string
 }
