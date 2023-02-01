@@ -1,13 +1,13 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, of, take } from 'rxjs';
 
 @Component({
-  selector: 'app-trips-table',
-  templateUrl: './trips-table.component.html',
-  styleUrls: ['./trips-table.component.scss'],
+  selector: 'app-invoices-table',
+  templateUrl: './invoices-table.component.html',
+  styleUrls: ['./invoices-table.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -16,7 +16,7 @@ import { Observable, of, take } from 'rxjs';
     ]),
   ],
 })
-export class TripsTableComponent implements OnInit, AfterViewInit {
+export class InvoicesTableComponent {
   @Input() dataSource: Observable<any[]> | undefined = of([]);
   @Input() dataColumns: string[] = [];
   @Output() addItem = new EventEmitter<void>();

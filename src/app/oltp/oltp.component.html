@@ -36,26 +36,34 @@
 
 <div class="container">
   <h2>Trips</h2>
-  <app-table
-    *ngIf="trips$"
+  <!--  <app-table-->
+  <!--    *ngIf="trips$"-->
+  <!--    [dataSource]="trips$"-->
+  <!--    [dataColumns]="tripColumns"-->
+  <!--    (addItem)="onAddTrip()"-->
+  <!--    (editItem)="onEditLocation($event)"-->
+  <!--    (deleteItem)="onDelete('Trip', $event)"-->
+  <!--  ></app-table>-->
+  <app-trips-table
     [dataSource]="trips$"
     [dataColumns]="tripColumns"
     (addItem)="onAddTrip()"
     (editItem)="onEditLocation($event)"
     (deleteItem)="onDelete('Trip', $event)"
-  ></app-table>
+  >
+  </app-trips-table>
 </div>
 
 <div class="container">
   <h2>Invoices</h2>
-  <app-table
+  <app-invoices-table
     *ngIf="invoices$"
     [dataSource]="invoices$"
     [dataColumns]="invoiceColumns"
     (addItem)="onAddInvoice()"
     (editItem)="onEditInvoice($event)"
     (deleteItem)="onDelete('Invoice', $event)"
-  ></app-table>
+  ></app-invoices-table>
 </div>
 
 

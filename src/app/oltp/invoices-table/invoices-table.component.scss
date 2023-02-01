@@ -3,7 +3,6 @@
   tr.example-detail-row {
     height: 0;
   }
-
   tr.example-element-row {
     cursor: pointer;
   }
@@ -20,6 +19,11 @@
     border-bottom-width: 0;
   }
 
+  .detail-header {
+    border-bottom: 1px solid grey;
+    margin: 0 10px;
+  }
+
   .example-element-detail {
     overflow: hidden;
     display: flex;
@@ -28,9 +32,7 @@
       flex: 1 1 0;
       padding: 10px;
 
-      p:first-of-type {
-        border-bottom: 1px solid grey;
-      }
+
     }
   }
 }

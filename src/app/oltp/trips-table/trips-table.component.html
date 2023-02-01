@@ -30,20 +30,41 @@
       <div class="example-element-detail"
            [@detailExpand]="expandedElement?.id === element?.id ? 'expanded' : 'collapsed'">
         <div class="detail">
-          <p>Driver</p>
-          <p><strong>Id:</strong></p>
-          <p><strong>First Name:</strong></p>
-          <p><strong>Last Name:</strong></p>
-          <p><strong>Car No:</strong></p>
-          <p><strong>Rating:</strong></p>
+          <p>Location End</p>
+          <p><strong>Id:</strong> {{element.locationStart.id}}</p>
+          <p><strong>Location Type:</strong> {{element.locationStart.locationType}}</p>
+          <p><strong>County:</strong> {{element.locationStart.county}}</p>
+          <p><strong>City:</strong> {{element.locationStart.city}}</p>
+          <p><strong>Street:</strong> {{element.locationStart.street}}</p>
+        </div>
+        <div class="detail">
+          <p>Location Start</p>
+          <p><strong>Id:</strong> {{element.locationEnd.id}}</p>
+          <p><strong>Location Type:</strong> {{element.locationEnd.locationType}}</p>
+          <p><strong>County:</strong> {{element.locationEnd.county}}</p>
+          <p><strong>City:</strong> {{element.locationEnd.city}}</p>
+          <p><strong>Street:</strong> {{element.locationEnd.street}}</p>
         </div>
         <div class="detail">
           <p>Client</p>
-          <p><strong>Id:</strong></p>
-          <p><strong>First Name:</strong></p>
-          <p><strong>Last Name:</strong></p>
-          <p><strong>Phone Number:</strong></p>
-          <p><strong>Email:</strong></p>
+          <p><strong>Id:</strong> {{element.client.id}}</p>
+          <p><strong>First Name:</strong> {{element.client.firstName}}</p>
+          <p><strong>Last Name:</strong> {{element.client.lastName}}</p>
+          <p><strong>Phone Number:</strong> {{element.client.phoneNumber}}</p>
+          <p><strong>Username:</strong>  {{element.client.username}}</p>
+          <p><strong>Email:</strong>  {{element.client.email}}</p>
+          <p><strong>Password:</strong>  {{element.client.password}}</p>
+          <p><strong>Rating:</strong>  {{element.client.rating}}</p>
+        </div>
+        <div class="detail">
+          <p>Driver</p>
+          <p><strong>Id:</strong>  {{element.driver.id}}</p>
+          <p><strong>First Name:</strong>  {{element.driver.firstName}}</p>
+          <p><strong>Last Name:</strong>  {{element.driver.lastName}}</p>
+          <p><strong>Phone Number:</strong>  {{element.driver.phoneNumber}}</p>
+          <p><strong>Driver Type:</strong>  {{element.driver.driverType}}</p>
+          <p><strong>Car Plates:</strong>  {{element.driver.carPlates}}</p>
+          <p><strong>Rating:</strong>  {{element.driver.rating}}</p>
         </div>
       </div>
     </td>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, take } from 'rxjs';
 import { AppService } from '../app.service';
@@ -24,7 +24,7 @@ export class OltpComponent {
   driverColumns: string[] = ['id', 'lastName', 'firstName', 'carPlates', 'rating', 'phoneNumber', 'driverType'];
   clientColumns: string[] = ['id', 'firstName', 'lastName', 'rating', 'phoneNumber', 'username', 'password', 'email'];
   locationColumns: string[] = ['id', 'locationType', 'county', 'city', 'street'];
-  invoiceColumns: string[] = ['id', 'amountToPay', 'status', 'tips', 'paymentType', 'tripId'];
+  invoiceColumns: string[] = ['id', 'amountToPay', 'status', 'tips', 'paymentType'];
   tripColumns: string[] = [
     'id',
     'distance',
@@ -34,11 +34,7 @@ export class OltpComponent {
     'currency',
     'status',
     'waitingFee',
-    'cancelFee',
-    'locationStartId',
-    'locationEndId',
-    'driverId',
-    'clientId',
+    'cancelFee'
   ];
   drivers$: Observable<Driver[]> | undefined;
   clients$: Observable<Client[]> | undefined;
@@ -47,12 +43,12 @@ export class OltpComponent {
   invoices$: Observable<Invoice[]> | undefined;
 
 
-  constructor(public dialog: MatDialog, public appService: AppService) {
-    this.setDrivers();
-    this.setClients();
-    this.setLocations();
-    this.setTrips();
-    this.setInvoices();
+  constructor(public dialog: MatDialog, public appService: AppService, private cdr: ChangeDetectorRef) {
+    this.drivers$ = this.appService.getDrivers();
+    this.locations$ = this.appService.getLocations();
+    this.clients$ = this.appService.getClients();
+    this.trips$ = this.appService.getTrips();
+    this.invoices$ = this.appService.getInvoices();
   }
 
   onAddDriver(): void {
@@ -146,12 +142,11 @@ export class OltpComponent {
   private handleDialogClose(dialogRef: MatDialogRef<any>, saveChangesCallback: Function, reloadCallback?: any): void {
     dialogRef.afterClosed().pipe(take(1)).subscribe(res => {
       if (res) {
-        saveChangesCallback(res).pipe(
+        saveChangesCallback.call(this.appService, res).pipe(
           take(1),
           // switchMap(reloadCallback)
         ).subscribe(() => {
-          reloadCallback();
-          console.log(res)
+          reloadCallback.call(this);
         });
       }
     });
@@ -159,27 +154,32 @@ export class OltpComponent {
 
   private setDrivers() {
     this.drivers$ = undefined;
+    this.cdr.detectChanges();
     this.drivers$ = this.appService.getDrivers();
 
   }
 
   private setClients() {
     this.clients$ = undefined;
+    this.cdr.detectChanges();
     this.clients$ = this.appService.getClients();
   }
 
   private setLocations() {
     this.locations$ = undefined;
+    this.cdr.detectChanges();
     this.locations$ = this.appService.getLocations();
   }
 
   private setTrips() {
     this.trips$ = undefined;
+    this.cdr.detectChanges();
     this.trips$ = this.appService.getTrips();
   }
 
   private setInvoices() {
     this.invoices$ = undefined;
+    this.cdr.detectChanges();
     this.invoices$ = this.appService.getInvoices();
   }
 

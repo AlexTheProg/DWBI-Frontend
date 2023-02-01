@@ -30,6 +30,7 @@ import { TableHeaderPipe } from './shared/table-header.pipe';
 import { TableComponent } from './shared/table/table.component';
 import { WarehouseComponent } from './warehouse/warehouse.component';
 import { TripsTableComponent } from './oltp/trips-table/trips-table.component';
+import { InvoicesTableComponent } from './oltp/invoices-table/invoices-table.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { TripsTableComponent } from './oltp/trips-table/trips-table.component';
     AddEditLocationComponent,
     AddEditInvoiceComponent,
     AddEditTripComponent,
-    TripsTableComponent
+    TripsTableComponent,
+    InvoicesTableComponent
   ],
   imports: [
     BrowserModule,
