@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { combineLatest, Observable, switchMap } from 'rxjs';
 import { Client } from './models/client.model';
 import { Driver } from './models/driver.model';
 import { Invoice } from './models/invoice.model';
@@ -12,6 +12,7 @@ import { Trip } from './models/trip.model';
 })
 export class AppService {
   private BASE_URL = 'http://localhost:8080/api/v1/oltp/';
+
 
   constructor(private httpClient: HttpClient) {
   }
@@ -36,6 +37,7 @@ export class AppService {
     return this.httpClient.get<Trip[]>(this.BASE_URL + 'trips');
   }
 
+
   addDriver(driver: Driver) {
     return this.httpClient.post(this.BASE_URL + 'drivers', driver);
   }
@@ -49,11 +51,47 @@ export class AppService {
   }
 
   addTrip(trip: Trip) {
-    return this.httpClient.post(this.BASE_URL + 'trips', trip);
+    const getClient = this.httpClient.get(`${this.BASE_URL}clients/${trip.clientId}`);
+    const getDriver = this.httpClient.get(`${this.BASE_URL}drivers/${trip.driverId}`);
+    const getLocationStart = this.httpClient.get(`${this.BASE_URL}locations/${trip.locationStartId}`);
+    const getLocationEnd = this.httpClient.get(`${this.BASE_URL}locations/${trip.locationEndId}`);
+    return combineLatest(getClient, getDriver, getLocationStart, getLocationEnd).pipe(
+      switchMap(([client, driver, locationStart, locationEnd]) => {
+        const completeTrip = {
+          id: trip.id,
+          distance: trip.distance,
+          estimatedCost: trip.estimatedCost,
+          pickupTime: trip.pickupTime,
+          dropoffTime: trip.dropoffTime,
+          currency: trip.currency,
+          status: trip.status,
+          waitingFee: trip.waitingFee,
+          cancelFee: trip.cancelFee,
+          locationStart,
+          locationEnd,
+          driver,
+          client
+        }
+        return this.httpClient.post(this.BASE_URL + 'trips', completeTrip);
+      }));
+
   }
 
   addInvoice(inv: Invoice) {
-    return this.httpClient.post(this.BASE_URL + 'invoices', inv);
+    return this.httpClient.get(`${this.BASE_URL}trips/${inv.tripId}`).pipe(
+      switchMap((trip) => {
+        const newInvoice = {
+          id: inv.id,
+          amountToPay: inv.amountToPay,
+          status: inv.status,
+          tips: inv.tips,
+          paymentType: inv.paymentType,
+          trip
+        }
+
+        return this.httpClient.post(this.BASE_URL + 'invoices', newInvoice)
+      })
+    );
   }
 
   editDriver(driver: Driver) {
@@ -69,11 +107,46 @@ export class AppService {
   }
 
   editTrip(trip: Trip) {
-    return this.httpClient.put(`${this.BASE_URL}trips/${trip.id}`, trip);
+    const getClient = this.httpClient.get(`${this.BASE_URL}clients/${trip.clientId}`);
+    const getDriver = this.httpClient.get(`${this.BASE_URL}drivers/${trip.driverId}`);
+    const getLocationStart = this.httpClient.get(`${this.BASE_URL}locations/${trip.locationStartId}`);
+    const getLocationEnd = this.httpClient.get(`${this.BASE_URL}locations/${trip.locationEndId}`);
+    return combineLatest(getClient, getDriver, getLocationStart, getLocationEnd).pipe(
+      switchMap(([client, driver, locationStart, locationEnd]) => {
+        const completeTrip = {
+          id: trip.id,
+          distance: trip.distance,
+          estimatedCost: trip.estimatedCost,
+          pickupTime: trip.pickupTime,
+          dropoffTime: trip.dropoffTime,
+          currency: trip.currency,
+          status: trip.status,
+          waitingFee: trip.waitingFee,
+          cancelFee: trip.cancelFee,
+          locationStart,
+          locationEnd,
+          driver,
+          client
+        }
+        return this.httpClient.put(`${this.BASE_URL}trips/${trip.id}`, completeTrip);
+      }));
   }
 
   editInvoice(inv: Invoice) {
-    return this.httpClient.put(`${this.BASE_URL}invoices/${inv.id}`, inv);
+    return this.httpClient.get(`${this.BASE_URL}trips/${inv.tripId}`).pipe(
+      switchMap((trip) => {
+        const newInvoice = {
+          id: inv.id,
+          amountToPay: inv.amountToPay,
+          status: inv.status,
+          tips: inv.tips,
+          paymentType: inv.paymentType,
+          trip
+        }
+
+        return this.httpClient.put(`${this.BASE_URL}invoices/${inv.id}`, newInvoice);
+      })
+    );
   }
 
   delete(type: string, id: number): Observable<any> {

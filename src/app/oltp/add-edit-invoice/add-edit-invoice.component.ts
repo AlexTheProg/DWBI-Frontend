@@ -33,7 +33,7 @@ export class AddEditInvoiceComponent {
     this.form = this.fb.group({
       paymentType: [this.initialItem.paymentType, Validators.required],
       tips: [this.initialItem.tips || null, Validators.required],
-      tripId: [this.initialItem.tripId || null, Validators.required],
+      tripId: [this.initialItem.trip?.id || null, Validators.required],
       amountToPay: [this.initialItem.amountToPay || null, Validators.required],
       status: [this.initialItem.status, Validators.required]
     });

@@ -47,20 +47,22 @@ export class AddEditTripComponent {
       status: [this.initialItem.status, Validators.required],
       waitingFee: [this.initialItem.waitingFee || null, Validators.required],
       cancelFee: [this.initialItem.cancelFee || null, Validators.required],
-      locationStartId: [this.initialItem.locationStartId || null, Validators.required],
-      locationEndId: [this.initialItem.locationEndId || null, Validators.required],
-      driverId: [this.initialItem.driverId || null, Validators.required],
-      clientId: [this.initialItem.clientId || null, Validators.required],
+      locationStartId: [this.initialItem.locationStart?.id || null, Validators.required],
+      locationEndId: [this.initialItem.locationEnd?.id || null, Validators.required],
+      driverId: [this.initialItem.driver?.id || null, Validators.required],
+      clientId: [this.initialItem.client?.id || null, Validators.required],
     });
   }
 
   onAdd(): void {
     const result = this.initialItem.id ? {id: this.initialItem.id, ...this.form.value} : this.form.value;
     if (typeof this.form.value.pickupTime !== 'string') {
-      result.pickupTime = this.form.value.pickupTime.toISOString().slice(0, 19).replace('T', ' ');
+      // result.pickupTime = this.form.value.pickupTime.toISOString().slice(0, 19).replace('T', ' ');
+      result.pickupTime = this.form.value.pickupTime.toISOString();
     }
     if (typeof this.form.value.dropoffTime !== 'string') {
-      result.dropoffTime = this.form.value.dropoffTime.toISOString().slice(0, 19).replace('T', ' ');
+      // result.dropoffTime = this.form.value.dropoffTime.toISOString().slice(0, 19).replace('T', ' ');
+      result.dropoffTime = this.form.value.dropoffTime.toISOString();
     }
     this.dialogRef.close(this.initialItem.id ? {id: this.initialItem.id, ...result} : result);
   }

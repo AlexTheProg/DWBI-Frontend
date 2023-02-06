@@ -24,7 +24,6 @@
     </td>
   </ng-container>
 
-  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="dataColumns.length + 1">
       <div
@@ -32,11 +31,11 @@
         <div class="detail-header">Trip</div>
         <div class="example-element-detail">
           <div class="detail">
-            <p><strong>Id:</strong> {{element.trip.id}}</p>
+            <p><strong>Id:</strong> {{element.trip?.id}}</p>
             <p><strong>Distance:</strong> {{element.trip.distance}}</p>
             <p><strong>Estimated Cost:</strong> {{element.trip.estimatedCost}}</p>
-            <p><strong>Pickup Time:</strong> {{element.trip.pickupTime}}</p>
-            <p><strong>Dropoff Time:</strong> {{element.trip.dropoffTime}}</p>
+            <p><strong>Pickup Time:</strong> {{element.trip.pickupTime | date: "short"}}</p>
+            <p><strong>Dropoff Time:</strong> {{element.trip.dropoffTime | date: "short"}}</p>
           </div>
           <div class="detail">
             <p><strong>Currency:</strong> {{element.trip.currency}}</p>

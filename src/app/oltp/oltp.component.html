@@ -36,19 +36,12 @@
 
 <div class="container">
   <h2>Trips</h2>
-  <!--  <app-table-->
-  <!--    *ngIf="trips$"-->
-  <!--    [dataSource]="trips$"-->
-  <!--    [dataColumns]="tripColumns"-->
-  <!--    (addItem)="onAddTrip()"-->
-  <!--    (editItem)="onEditLocation($event)"-->
-  <!--    (deleteItem)="onDelete('Trip', $event)"-->
-  <!--  ></app-table>-->
   <app-trips-table
+    *ngIf="trips$"
     [dataSource]="trips$"
     [dataColumns]="tripColumns"
     (addItem)="onAddTrip()"
-    (editItem)="onEditLocation($event)"
+    (editItem)="onEditTrip($event)"
     (deleteItem)="onDelete('Trip', $event)"
   >
   </app-trips-table>
